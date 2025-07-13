@@ -59,7 +59,6 @@ export default function PlayTab() {
       }
       
       await AsyncStorage.setItem('recentScores', JSON.stringify(scores));
-      console.log('Score saved successfully:', newScore);
     } catch (error) {
       console.error('Error saving recent score:', error);
     }
