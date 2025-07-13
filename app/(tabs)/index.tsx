@@ -84,8 +84,7 @@ export default function PlayTab() {
 
   useEffect(() => {
     // Hide Android bottom nav bar and status bar for immersive gaming
-    NavigationBar.setVisibilityAsync('immersive');
-    NavigationBar.setBackgroundColorAsync('transparent');
+    NavigationBar.setVisibilityAsync('hidden');
     StatusBar.setHidden(true, 'fade');
     
     // Load high score
@@ -106,7 +105,6 @@ export default function PlayTab() {
     return () => {
       // Restore UI when leaving
       NavigationBar.setVisibilityAsync('visible');
-      NavigationBar.setBackgroundColorAsync('#000000');
       StatusBar.setHidden(false, 'fade');
     };
   }, []);

@@ -24,10 +24,8 @@ export default function TabLayout() {
       try {
         if (tabsVisible) {
           await NavigationBar.setVisibilityAsync('visible');
-          await NavigationBar.setBackgroundColorAsync('#000000');
         } else {
-          await NavigationBar.setVisibilityAsync('immersive');
-          await NavigationBar.setBackgroundColorAsync('transparent');
+          await NavigationBar.setVisibilityAsync('hidden');
         }
       } catch (error) {
         console.error('Error updating navigation bar:', error);
