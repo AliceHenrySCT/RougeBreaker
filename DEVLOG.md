@@ -92,6 +92,20 @@ const spawnExtraBalls = () => {
 
 ---
 
+## Known Issues
+
+**Performance Stutters**: At the start of each gameplay round, there is a noticeable stutter effect that affects both the shader animation and ball movement. This appears to be related to the initialization timing between the Skia graphics engine and React Native Reanimated worklets, but the exact cause remains unidentified despite extensive debugging efforts.
+
+**Potential Causes Investigated**:
+- Shader compilation timing during component mount
+- Worklet initialization delays
+- Memory allocation patterns during game state transitions
+- Frame synchronization between different rendering systems
+
+This issue does not affect gameplay functionality but creates a brief visual hiccup that impacts the initial user experience. Future iterations should focus on identifying the root cause, potentially through profiling tools or alternative rendering approaches.
+
+---
+
 ## Project Summary
 
 **Total Development Time**: 3 weeks
