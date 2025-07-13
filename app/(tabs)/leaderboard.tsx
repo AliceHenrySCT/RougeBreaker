@@ -49,6 +49,8 @@ export default function LeaderboardTab() {
               await AsyncStorage.removeItem('recentScores');
               setHighScore(0);
               setRecentScores([]);
+              // Reload scores to ensure state is properly reset
+              await loadScores();
             } catch (error) {
               console.error('Error resetting scores:', error);
             }

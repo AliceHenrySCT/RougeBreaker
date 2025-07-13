@@ -20,11 +20,20 @@ export default function TabLayout() {
 
   // Hide/show Android navigation bar based on tab visibility
   useEffect(() => {
-    if (tabsVisible) {
-      NavigationBar.setVisibilityAsync('visible');
-    } else {
-      NavigationBar.setVisibilityAsync('hidden');
-    }
+    const updateNavigationBar = async () => {
+      try {
+        if (tabsVisible) {
+          await NavigationBar.setVisibilityAsync('visible');
+          await NavigationBar.setBackgroundColorAsync('#000000');
+        } else {
+          await NavigationBar.setVisibilityAsync('hidden');
+        }
+      } catch (error) {
+        console.error('Error updating navigation bar:', error);
+      }
+    };
+    
+    updateNavigationBar();
   }, [tabsVisible]);
   return (
     <TabVisibilityContext.Provider value={{ tabsVisible, setTabsVisible }}>

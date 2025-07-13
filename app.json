@@ -24,9 +24,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true,
       "androidNavigationBar": {
-        "visible": "immersive-sticky",
+        "visible": "hidden",
         "barStyle": "light-content",
         "backgroundColor": "#000000"
       }

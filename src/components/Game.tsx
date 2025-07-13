@@ -429,8 +429,18 @@ const Game: React.FC<GameProps> = ({ onGameEnd, round, currentScore, onTabVisibi
   // Save recent score function
   const saveRecentScore = async (finalScore: number, finalRound: number) => {
     try {
-      const existingScores = await AsyncStorage.getItem('recentScores');
-      const scores = existingScores ? JSON.parse(existingScores) : [];
+      // Always get fresh data from AsyncStorage
+      const existingScoresString = await AsyncStorage.getItem('recentScores');
+      let scores = [];
+      
+      if (existingScoresString) {
+        try {
+          scores = JSON.parse(existingScoresString);
+        } catch (parseError) {
+          console.error('Error parsing existing scores:', parseError);
+          scores = [];
+        }
+      }
       
       const newScore = {
         score: finalScore,
@@ -446,6 +456,7 @@ const Game: React.FC<GameProps> = ({ onGameEnd, round, currentScore, onTabVisibi
       }
       
       await AsyncStorage.setItem('recentScores', JSON.stringify(scores));
+      console.log('Score saved successfully:', newScore);
     } catch (error) {
       console.error('Error saving recent score:', error);
     }
