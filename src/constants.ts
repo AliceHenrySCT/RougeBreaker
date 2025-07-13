@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
 
-const { height: windowHeight, width: windowWidth } = Dimensions.get("window");
+const { height: windowHeight, width: windowWidth } = Dimensions.get("screen");
 
 export const BALL_COLOR = "#d1d5db"; // Light grey color
 
