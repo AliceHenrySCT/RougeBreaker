@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Trophy, RotateCcw } from 'lucide-react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 interface ScoreEntry {
   score: number;
@@ -13,9 +15,12 @@ export default function LeaderboardTab() {
   const [highScore, setHighScore] = useState(0);
   const [recentScores, setRecentScores] = useState<ScoreEntry[]>([]);
 
-  useEffect(() => {
-    loadScores();
-  }, []);
+  // Load scores every time the tab comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      loadScores();
+    }, [])
+  );
 
   const loadScores = async () => {
     try {
