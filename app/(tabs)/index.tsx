@@ -12,6 +12,11 @@ import { useCallback } from 'react';
 
 type PowerUp = 'speed' | 'shield' | 'extraBall' | null;
 
+interface ScoreEntry {
+  score: number;
+  round: number;
+  date: string;
+}
 export default function PlayTab() {
   const [gameState, setGameState] = useState<'menu' | 'playing' | 'gameOver'>('menu');
   const [currentScore, setCurrentScore] = useState(0);
@@ -24,6 +29,41 @@ export default function PlayTab() {
   const [speedBoostCount, setSpeedBoostCount] = useState(0);
   const [difficulty, setDifficulty] = useState<'easy' | 'normal' | 'hard'>('normal');
   const { setTabsVisible } = useTabVisibility();
+
+  // Add function to save recent score
+  const saveRecentScore = async (finalScore: number, finalRound: number) => {
+    try {
+      const existingScoresString = await AsyncStorage.getItem('recentScores');
+      let scores: ScoreEntry[] = [];
+      
+      if (existingScoresString) {
+        try {
+          scores = JSON.parse(existingScoresString);
+        } catch (parseError) {
+          console.error('Error parsing existing scores:', parseError);
+          scores = [];
+        }
+      }
+      
+      const newScore: ScoreEntry = {
+        score: finalScore,
+        round: finalRound,
+        date: new Date().toISOString(),
+      };
+      
+      scores.unshift(newScore);
+      
+      // Keep only the last 10 scores
+      if (scores.length > 10) {
+        scores.splice(10);
+      }
+      
+      await AsyncStorage.setItem('recentScores', JSON.stringify(scores));
+      console.log('Score saved successfully:', newScore);
+    } catch (error) {
+      console.error('Error saving recent score:', error);
+    }
+  };
 
   // Load difficulty setting when tab comes into focus
   useFocusEffect(
@@ -81,6 +121,9 @@ export default function PlayTab() {
 
   const handleGameEnd = (finalScore: number, won: boolean) => {
     setCurrentScore(finalScore);
+    
+    // Save recent score
+    saveRecentScore(finalScore, round);
     
     if (finalScore > highScore) {
       saveHighScore(finalScore);

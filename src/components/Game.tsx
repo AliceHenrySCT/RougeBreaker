@@ -131,6 +131,7 @@ const Game: React.FC<GameProps> = ({ onGameEnd, round, currentScore, onTabVisibi
   const newLivesCount = useSharedValue(0);
   
   // Score multiplier based on difficulty
+  // Score multiplier based on difficulty
   const scoreMultiplier = useSharedValue(1.0);
   
   // Extra ball system
@@ -426,55 +427,6 @@ const Game: React.FC<GameProps> = ({ onGameEnd, round, currentScore, onTabVisibi
     }
   };
 
-  // Save recent score function
-  const saveRecentScore = async (finalScore: number, finalRound: number) => {
-    try {
-      // Always get fresh data from AsyncStorage
-      const existingScoresString = await AsyncStorage.getItem('recentScores');
-      let scores = [];
-      
-      if (existingScoresString) {
-        try {
-          scores = JSON.parse(existingScoresString);
-        } catch (parseError) {
-          console.error('Error parsing existing scores:', parseError);
-          scores = [];
-        }
-      }
-      
-      const newScore = {
-        score: finalScore,
-        round: finalRound,
-        date: new Date().toISOString(),
-      };
-      
-      scores.unshift(newScore);
-      
-      // Keep only the last 10 scores
-      if (scores.length > 10) {
-        scores.splice(10);
-      }
-      
-      await AsyncStorage.setItem('recentScores', JSON.stringify(scores));
-      console.log('Score saved successfully:', newScore);
-    } catch (error) {
-      console.error('Error saving recent score:', error);
-    }
-  };
-
-  // Watch for score saving trigger
-  useEffect(() => {
-    const checkSaveScore = () => {
-      if (shouldSaveScore.value) {
-        saveRecentScore(finalScoreToSave.value, finalRoundToSave.value);
-        shouldSaveScore.value = false;
-      }
-    };
-    
-    const interval = setInterval(checkSaveScore, 100);
-    return () => clearInterval(interval);
-  }, []);
-
   // Watch for game end trigger
   useEffect(() => {
     const checkGameEnd = () => {
@@ -522,11 +474,9 @@ const Game: React.FC<GameProps> = ({ onGameEnd, round, currentScore, onTabVisibi
     // Check win condition
     if (brickCount.value >= TOTAL_BRICKS && !gameEnded.value) {
       gameEnded.value = true;
-      // Save score to recent scores
       finalScoreToSave.value = score.value;
       finalRoundToSave.value = round;
       gameWon.value = true;
-      shouldSaveScore.value = true;
       shouldTriggerGameEnd.value = true;
       return;
     }
@@ -549,7 +499,6 @@ const Game: React.FC<GameProps> = ({ onGameEnd, round, currentScore, onTabVisibi
         finalScoreToSave.value = score.value;
         finalRoundToSave.value = round;
         gameWon.value = false;
-        shouldSaveScore.value = true;
         shouldTriggerGameEnd.value = true;
         return;
       }
