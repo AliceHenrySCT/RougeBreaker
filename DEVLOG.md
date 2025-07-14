@@ -20,6 +20,27 @@ A 3-week development journey creating a modern brick breaker game with React Nat
 
 **Technologies Integrated**: React Native Skia, Reanimated, Gesture Handler, Expo Router
 
+**Key Code Implementation**:
+```typescript
+// Physics-based collision detection with buffer zones
+const resolveCollisionWithBounce = (info: Collision) => {
+  const circleInfo = info.o1 as CircleInterface;
+  const rectInfo = info.o2 as PaddleInterface | BrickInterface;
+  
+  // Add buffer to prevent ball sticking
+  if (minDist === distToTop) {
+    circleInfo.y.value = rectTop - RADIUS - 1; // Buffer zone
+    circleInfo.vy = -Math.abs(circleInfo.vy);
+  }
+};
+
+// Responsive paddle gesture handling
+const gesture = Gesture.Pan()
+  .onChange(({ x }) => {
+    rectangleObject.x.value = x - adjustedPaddleWidth / 2;
+  });
+```
+
 ---
 
 ## Week 2: Game Features and Progression
@@ -41,6 +62,29 @@ A 3-week development journey creating a modern brick breaker game with React Nat
 - **Power-up Balance**: Designed strategic choices that enhance gameplay
 
 **Features Added**: Leaderboard UI, power-up selection interface, score persistence
+
+**Key Code Implementation**:
+```typescript
+// Extra ball spawning with delayed velocity copying
+const spawnExtraBalls = () => {
+  'worklet';
+  if (extraBallPowerUps.value <= 0 || hasUsedExtraBalls.value) return;
+  
+  hasUsedExtraBalls.value = true;
+  extraBallSpawnTime.value = Date.now();
+  
+  // Position near paddle for immediate collision
+  extraBall.x.value = rectangleObject.x.value + (rectangleObject.width / 2);
+  extraBall.y.value = paddleY - RADIUS + 2;
+};
+
+// Power-up selection system
+const powerUps = [
+  { id: 'speed', name: 'Speed Boost', icon: Zap },
+  { id: 'shield', name: 'Extra Life', icon: Shield },
+  { id: 'extraBall', name: 'Extra Ball', icon: Circle }
+];
+```
 
 ---
 
@@ -64,6 +108,33 @@ A 3-week development journey creating a modern brick breaker game with React Nat
 - **Dynamic Properties**: Updated paddle size and ball speed without breaking physics
 
 **Final Polish**: Comprehensive documentation, code cleanup
+
+**Key Code Implementation**:
+```typescript
+// Dynamic difficulty adjustments
+const getDifficultyAdjustedSpeed = (baseSpeed: number) => {
+  switch (difficulty) {
+    case 'easy': return baseSpeed - 15;
+    case 'hard': return baseSpeed + 15;
+    default: return baseSpeed;
+  }
+};
+
+const getDifficultyAdjustedPaddleWidth = () => {
+  switch (difficulty) {
+    case 'easy': return PADDLE_WIDTH * 1.2; // 20% wider
+    case 'hard': return PADDLE_WIDTH * 0.8; // 20% narrower
+    default: return PADDLE_WIDTH;
+  }
+};
+
+// Immersive gameplay with hidden navigation
+useEffect(() => {
+  onTabVisibilityChange(false); // Hide tabs during gameplay
+  NavigationBar.setVisibilityAsync('hidden');
+  StatusBar.setHidden(true, 'fade');
+}, []);
+```
 
 ---
 
