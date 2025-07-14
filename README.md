@@ -50,7 +50,7 @@ RougeBreaker is a physics-based brick breaker game that combines classic arcade 
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/AliceHenrySCT/RougeBreaker
    cd rougebreaker
    ```
 
@@ -63,7 +63,7 @@ RougeBreaker is a physics-based brick breaker game that combines classic arcade 
    ```bash
    npm run dev
    # or
-   expo start
+   npx expo start
    ```
 
 4. **Run on device/simulator**
@@ -88,7 +88,6 @@ RougeBreaker is a physics-based brick breaker game that combines classic arcade 
 
 ### Game Controls
 - **Paddle Movement**: Drag anywhere on the screen
-- **Ball Launch**: Tap and drag when the game starts
 - **Menu Navigation**: Use the bottom tab bar
 
 ### Scoring System
@@ -128,7 +127,7 @@ RougeBreaker is a physics-based brick breaker game that combines classic arcade 
 ## Future Improvements
 
 ### Gameplay Enhancements
-- **More Power-ups**: Magnetic paddle, explosive balls, multi-ball modes
+- **More Power-ups**: Magnetic paddle, explosive balls, phasing balls
 - **Special Bricks**: Unbreakable bricks, moving bricks, bonus bricks
 - **Boss Levels**: Special challenge rounds with unique mechanics
 - **Combo System**: Score multipliers for consecutive brick hits
@@ -165,12 +164,9 @@ RougeBreaker is a physics-based brick breaker game that combines classic arcade 
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
-
-This project is licensed under the 0BSD License - see the LICENSE file for details.
-
 ## Acknowledgments
 
 - Shader effects courtesy of P_Malin from ShaderToy
+- Base physics engine created by @DanRNLab on youtube
 - Inspired by classic arcade brick breaker games
 - Built with the Expo and React Native communities
