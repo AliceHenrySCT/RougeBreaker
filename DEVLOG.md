@@ -99,6 +99,7 @@ const powerUps = [
   - Score multipliers (0.8x, 1.0x, 1.2x)
 - Created immersive gameplay experience (hidden navigation during play)
 - Added comprehensive settings panel with difficulty selection
+- Implemented test mode toggle for faster development testing (10 vs 60 bricks)
 - Optimized performance and fixed remaining collision bugs
 - Enhanced UI/UX with smooth transitions and visual feedback
 

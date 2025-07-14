@@ -31,6 +31,7 @@ RougeBreaker is a physics-based brick breaker game that combines classic arcade 
 - **Lives counter** and round progression display
 - **Leaderboard system** with high scores and recent games
 - **Settings panel** for difficulty customization
+- **Test mode** for faster development testing (10 bricks vs full 60)
 
 ### Visual Features
 - **Animated starfield background** using custom shaders
@@ -94,6 +95,11 @@ RougeBreaker is a physics-based brick breaker game that combines classic arcade 
 - **100 points** per brick (base score)
 - **Difficulty multipliers**: Easy (0.8x), Normal (1.0x), Hard (1.2x)
 - **Bonus points** for completing rounds quickly
+
+### Development Features
+- **Test Mode**: Toggle between 10 bricks (testing) and 60 bricks (normal gameplay)
+- **Difficulty Settings**: Easy, Normal, and Hard modes with different gameplay parameters
+- **Score Persistence**: High scores and recent games saved locally
 
 ## Technologies Used
 
