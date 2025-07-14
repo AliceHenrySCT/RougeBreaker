@@ -13,18 +13,6 @@ A 3-week development journey creating a modern brick breaker game with React Nat
 - Generated 60-brick wall with gradient color system (purple to blue)
 - Added starfield background using custom Skia shaders
 
-**Key Technical Implementations**:
-```typescript
-// Physics engine core
-const move = (object: ShapeInterface, dt: number, maxSpeed: number) => {
-  "worklet";
-  object.vx += object.ax * dt;
-  object.vy += object.ay * dt;
-  object.x.value += object.vx * dt;
-  object.y.value += object.vy * dt;
-};
-```
-
 **Challenges Overcome**:
 - **Ball Sticking Issues**: Fixed by adding buffer zones in collision detection
 - **TypeScript Configuration**: Resolved Skia type definitions and path mapping
@@ -45,19 +33,6 @@ const move = (object: ShapeInterface, dt: number, maxSpeed: number) => {
 - Built multi-ball gameplay (up to 6 balls simultaneously)
 - Implemented lives system with extra life power-ups (max 3 lives)
 - Added data persistence with AsyncStorage for high scores and recent games
-
-**Key Technical Implementations**:
-```typescript
-// Multi-ball spawning system
-const spawnExtraBalls = () => {
-  'worklet';
-  const ballsToSpawn = Math.min(extraBallPowerUps.value, 5);
-  for (let i = 0; i < ballsToSpawn; i++) {
-    const extraBall = allExtraBalls[i];
-    // Position and velocity setup with random variations
-  }
-};
-```
 
 **Challenges Overcome**:
 - **State Synchronization**: Managed complex game state between UI and physics
@@ -88,13 +63,13 @@ const spawnExtraBalls = () => {
 - **Performance Optimization**: Improved collision detection algorithms for smooth 60fps
 - **Dynamic Properties**: Updated paddle size and ball speed without breaking physics
 
-**Final Polish**: Removed unused haptic/sound systems, comprehensive documentation, code cleanup
+**Final Polish**: Comprehensive documentation, code cleanup
 
 ---
 
 ## Known Issues
 
-**Performance Stutters**: At the start of each gameplay round, there is a noticeable stutter effect that affects both the shader animation and ball movement. This appears to be related to the initialization timing between the Skia graphics engine and React Native Reanimated worklets, but the exact cause remains unidentified despite extensive debugging efforts.
+**Performance Stutters**: At the start of each gameplay round, there is a noticeable stutter effect that affects both the shader animation and ball movement. This may be related to the initialization timing between the Skia graphics engine and React Native Reanimated worklets, but the exact cause remains unidentified despite extensive debugging efforts.
 
 **Potential Causes Investigated**:
 - Shader compilation timing during component mount
@@ -109,14 +84,13 @@ This issue does not affect gameplay functionality but creates a brief visual hic
 ## Project Summary
 
 **Total Development Time**: 3 weeks
-**Final Features**: Physics-based gameplay, 3 difficulty levels, power-up system, multi-ball mechanics, score persistence, immersive UI
-**Technologies Mastered**: React Native, Expo, Skia graphics, Reanimated worklets, TypeScript
+**Final Features**: Physics-based gameplay, 3 difficulty levels, power-up selection system, multi-ball mechanics, score persistence, immersive UI
+**Technologies Utilized**: React Native, Expo, Skia graphics, Reanimated worklets, TypeScript
 **Lines of Code**: ~2,000+ TypeScript
 
 **Key Learnings**:
 1. **Performance Matters**: Game development requires careful optimization for smooth gameplay
 2. **State Management**: Complex games need well-structured state handling between UI and physics
 3. **User Experience**: Small details like difficulty selection and gameplay decisions significantly improve engagement
-4. **Platform Considerations**: Cross-platform development requires attention to platform-specific behaviors
 
 **Final Result**: Complete, polished brick breaker game ready for app store deployment with engaging mechanics and high replay value.
