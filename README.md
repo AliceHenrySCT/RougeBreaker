@@ -1,4 +1,4 @@
-# RougeBreaker - Modern Brick Breaker Game
+# RougeBreaker - Score Based Brick Breaker Game
 
 A modern take on the classic brick breaker game built with React Native and Expo. Break through colorful brick walls, advance through challenging rounds, and compete for the highest score in this immersive mobile gaming experience.
 
