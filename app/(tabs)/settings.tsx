@@ -5,6 +5,7 @@ import { Settings as SettingsIcon } from 'lucide-react-native';
 
 export default function SettingsTab() {
   const [difficulty, setDifficulty] = useState<'easy' | 'normal' | 'hard'>('normal');
+  const [testMode, setTestMode] = useState(false);
 
   useEffect(() => {
     loadSettings();
@@ -13,9 +14,14 @@ export default function SettingsTab() {
   const loadSettings = async () => {
     try {
       const savedDifficulty = await AsyncStorage.getItem('difficulty');
+      const savedTestMode = await AsyncStorage.getItem('testMode');
       
       if (savedDifficulty) {
         setDifficulty(savedDifficulty as 'easy' | 'normal' | 'hard');
+      }
+      
+      if (savedTestMode !== null) {
+        setTestMode(JSON.parse(savedTestMode));
       }
     } catch (error) {
       console.error('Error loading settings:', error);
@@ -25,6 +31,11 @@ export default function SettingsTab() {
   const changeDifficulty = (newDifficulty: 'easy' | 'normal' | 'hard') => {
     setDifficulty(newDifficulty);
     AsyncStorage.setItem('difficulty', newDifficulty);
+  };
+
+  const toggleTestMode = (enabled: boolean) => {
+    setTestMode(enabled);
+    AsyncStorage.setItem('testMode', JSON.stringify(enabled));
   };
 
   return (
@@ -62,6 +73,25 @@ export default function SettingsTab() {
           {difficulty === 'normal' && 'Balanced gameplay experience'}
           {difficulty === 'hard' && 'Faster ball speed, smaller paddle'}
         </Text>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Testing</Text>
+        
+        <View style={styles.settingRow}>
+          <View style={styles.settingInfo}>
+            <Text style={styles.settingLabel}>Test Mode</Text>
+            <Text style={styles.settingDescription}>
+              {testMode ? 'Win rounds with only 10 bricks' : 'Win rounds with all 60 bricks'}
+            </Text>
+          </View>
+          <Switch
+            value={testMode}
+            onValueChange={toggleTestMode}
+            trackColor={{ false: '#333', true: '#6200EE' }}
+            thumbColor={testMode ? '#fff' : '#666'}
+          />
+        </View>
       </View>
 
       <View style={styles.section}>

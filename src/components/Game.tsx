@@ -49,6 +49,7 @@ interface GameProps {
   onExtraBallsChange: (extraBalls: number) => void;
   speedBoostCount: number;
   difficulty: 'easy' | 'normal' | 'hard';
+  testMode: boolean;
 }
 
 const fontFamily = Platform.select({ ios: 'Helvetica', default: 'serif' });
@@ -116,7 +117,7 @@ const Brick = ({ idx, brick }: { idx: number; brick: BrickInterface }) => {
 };
 
 // Main Game component
-const Game: React.FC<GameProps> = ({ onGameEnd, round, currentScore, onTabVisibilityChange, lives, onLivesChange, extraBalls, onExtraBallsChange, speedBoostCount, difficulty }) => {
+const Game: React.FC<GameProps> = ({ onGameEnd, round, currentScore, onTabVisibilityChange, lives, onLivesChange, extraBalls, onExtraBallsChange, speedBoostCount, difficulty, testMode }) => {
   const brickCount = useSharedValue(0);
   const score = useSharedValue(currentScore);
   const currentLives = useSharedValue(lives);
@@ -129,6 +130,7 @@ const Game: React.FC<GameProps> = ({ onGameEnd, round, currentScore, onTabVisibi
   const gameWon = useSharedValue(false);
   const shouldUpdateLives = useSharedValue(false);
   const newLivesCount = useSharedValue(0);
+  const requiredBricks = useSharedValue(testMode ? 10 : TOTAL_BRICKS);
   
   // Score multiplier based on difficulty
   // Score multiplier based on difficulty
@@ -266,7 +268,8 @@ const Game: React.FC<GameProps> = ({ onGameEnd, round, currentScore, onTabVisibi
   // Update score multiplier when difficulty changes
   useEffect(() => {
     scoreMultiplier.value = getDifficultyScoreMultiplier();
-  }, [difficulty]);
+    requiredBricks.value = testMode ? 10 : TOTAL_BRICKS;
+  }, [difficulty, testMode]);
 
 
   // Watch for lives update trigger
@@ -472,7 +475,7 @@ const Game: React.FC<GameProps> = ({ onGameEnd, round, currentScore, onTabVisibi
     }
     
     // Check win condition
-    if (brickCount.value >= TOTAL_BRICKS && !gameEnded.value) {
+    if (brickCount.value >= requiredBricks.value && !gameEnded.value) {
       gameEnded.value = true;
       finalScoreToSave.value = score.value;
       finalRoundToSave.value = round;

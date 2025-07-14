@@ -28,6 +28,7 @@ export default function PlayTab() {
   const [extraLifeUsageCount, setExtraLifeUsageCount] = useState(0);
   const [speedBoostCount, setSpeedBoostCount] = useState(0);
   const [difficulty, setDifficulty] = useState<'easy' | 'normal' | 'hard'>('normal');
+  const [testMode, setTestMode] = useState(false);
   const { setTabsVisible } = useTabVisibility();
 
   // Add function to save recent score
@@ -70,8 +71,14 @@ export default function PlayTab() {
       const loadDifficulty = async () => {
         try {
           const savedDifficulty = await AsyncStorage.getItem('difficulty');
+          const savedTestMode = await AsyncStorage.getItem('testMode');
+          
           if (savedDifficulty) {
             setDifficulty(savedDifficulty as 'easy' | 'normal' | 'hard');
+          }
+          
+          if (savedTestMode !== null) {
+            setTestMode(JSON.parse(savedTestMode));
           }
         } catch (error) {
           console.error('Error loading difficulty:', error);
@@ -192,6 +199,7 @@ export default function PlayTab() {
         onExtraBallsChange={handleExtraBallsChange}
         speedBoostCount={speedBoostCount}
         difficulty={difficulty}
+        testMode={testMode}
       />
     );
   }
