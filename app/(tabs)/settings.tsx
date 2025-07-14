@@ -79,7 +79,7 @@ export default function SettingsTab() {
         <Text style={styles.sectionTitle}>Testing</Text>
         
         <View style={styles.settingRow}>
-          <View style={styles.settingInfo}>
+          <View style={styles.settingTextContainer}>
             <Text style={styles.settingLabel}>Test Mode</Text>
             <Text style={styles.settingDescription}>
               {testMode ? 'Win rounds with only 10 bricks' : 'Win rounds with all 60 bricks'}
@@ -154,8 +154,9 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 12,
   },
-  settingText: {
+  settingTextContainer: {
     flex: 1,
+    marginRight: 12,
   },
   settingLabel: {
     fontSize: 16,
